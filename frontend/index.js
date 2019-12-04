@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(e){
-let listOfArtists = ["Beatles"] // we place authors here so we can get some random famous songs from different authors
-let nameOfSongs = [] // this will hold the whole song list from all the authors
-let idOfSongs = [] // will hold all the IDs of the song which can be used to obtain the lyrics
+let lyricsDiv = document.querySelector("#lyrics")
+let listOfArtists = ["Beatles", "Aretha Franklin"] // we place authors here so we can get some random famous songs from different authors
+const songs = [] // this will hold the whole song list from all the authors
+const idOfSongs = [] // will hold all the IDs of the song which can be used to obtain the lyrics
+
 
 /* GOALS needed to finish project: 
     - dynamically change fetches so that they can 
@@ -23,10 +25,10 @@ let userList = document.querySelector("#userlist")
             userList.insertAdjacentHTML("beforeend", newListItem);
         })
     })
-
-    // 
+    
 listOfArtists.forEach(function(artist){
-    fetch(`https://api.musixmatch.com/ws/1.1/track.search?format=json&q_artist=${artist}&s_track_rating=desc&quorum_factor=1&page_size=5&page=1&apikey=47143ce136469bce4ddc6c04e13ec917`)
+    let artist_string = artist.replace(" ", "%20")
+    fetch(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?format=json&q_artist=${artist_string}&s_track_rating=desc&quorum_factor=1&page_size=5&page=1&apikey=47143ce136469bce4ddc6c04e13ec917`)
     .then(function(resp)
     {
         return resp.json()
@@ -35,36 +37,45 @@ listOfArtists.forEach(function(artist){
             let songName = song.track.track_name
             let songId = song.track.track_id
     
-        if(songName.includes("-")){
+        if(songName.includes("- ")){
             let i = songName.indexOf("-")
             songName = songName.slice(0, i).trim()
         }
-        else if(songName.includes("(")){
+        else if(songName.includes("( ")){
             let i = songName.indexOf("(")
             songName = songName.slice(0, i).trim()
         }
-                // need to fix this if statement below
-    
-        if(!nameOfSongs.includes(songName))
-        {
-            nameOfSongs.push(songName)
-            idOfSongs.push(songId)
-        }
-            console.log(nameOfSongs)
+            console.log(songName)
+            let theSong = {name: songName, id: songId, lyrics: "" }
+            getLyrics(theSong)
             })
         })
+        
     })
 
 
-    idOfSongs
-    fetch("https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=jsonp&track_id=1231231&apikey=47143ce136469bce4ddc6c04e13ec917")
-        
-        // data.message.body.track_list.forEach(function(songInfo){
-        //     let newListItem = `<li id=${songInfo.track_id}> ${songInfo.track_name} </li>`
-        //     userList.insertAdjacentHTML("beforeend", newListItem)
-        // })
+    function getLyrics(song){
+        fetch(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?format=json&track_id=${song.id}&apikey=47143ce136469bce4ddc6c04e13ec917`)
+        .then(function(resp){
+            return resp.json();
+        })
+        .then(function(data){
+            song.lyrics = data.message.body.lyrics.lyrics_body
+            songs.push(song)
+            displayLyrics(songs)
+            console.log(songs)
+        })
+    }
     
-    // dont forget to remove API key before pushing to git
+
+    function displayLyrics(songs){
+        let songLyrics = `<span id=${songs.id}>${songs.lyrics}</span>`
+        lyricsDiv.insertAdjacentHTML("beforeend", songLyrics)
+    }
+
+
+        
+
 
 })
 
