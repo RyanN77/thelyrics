@@ -1,7 +1,7 @@
 class CreateGames < ActiveRecord::Migration[6.0]
   def change
     create_table :games do |t|
-      t.interger :score
+      t.integer :score
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
