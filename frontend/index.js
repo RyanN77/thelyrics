@@ -147,16 +147,36 @@ submitName.addEventListener("submit", e => {
     }
 
     function displayLyrics(song){
-        let div = document.getElementById("lyrics")
-        div.innerHTML = `
-        <p id="the_lyrics">${song.lyrics.split("***")[0]}</p>
-        
-        <div id="choices">
+        let timer = false
+        let index = 0
+        let choicesDiv = document.querySelector("#choices")
+        let div = document.querySelector("#lyrics")
+        let splitLyrics = song.lyrics.split("***")[0].split(/[\s↵]/)
+        let buttonChoices = `
         <button class="frankie-button" disabled>Frank Zappa</button>
         <button class="frankie-button">Frank Ocean</button>
         <button class="frankie-button">Frank Sinatra</button>
-        </div>
         `
+        div.insertAdjacentHTML("beforeend", buttonChoices)
+        console.log(splitLyrics)
+        console.log(splitLyrics.length - 1)
+        splitLyrics.forEach(() => {
+            if (timer === false){
+                console.log(index < splitLyrics.length)
+                setInterval(displayWord, 500)
+    
+                    function displayWord(){
+                        if (index < splitLyrics.length){
+                            div.insertAdjacentHTML("beforeend", splitLyrics[index] + " ") 
+                            timer = false
+                            console.log(index)
+                            index++
+                        }
+                    }
+    
+                timer = true
+            }
+        })
     }
 
 
