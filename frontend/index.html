@@ -8,10 +8,35 @@
         <title>Lyrics</title>
     </head>
     <body>
-        <h1 class="header">TEST</h1>
-        <h2 id="timer"></h2>
-        <div id="lyrics"></div>
-        <button class="startgame">Start Game</button>
+        <h1 class="header">Name That Frank!</h1>
+
+        <div id="scoreboard">
+
+        </div>
+
+
+        <div>
+            <h2 id="timer"></h2>
+            <h2 id="lives"></h2>
+        </div>
+
+        <div id="lyrics">
+            
+        </div>
+
+        <div id="modal">
+            <div id="modalContent">
+                <form id="endGameForm">
+                        <input type="text" id="name_input">
+                        <input type="submit" name="submit">
+                </form>
+            </div>
+        </div>
+
+        <div id="options">
+            <button id="startgame">Start Game</button>
+            <button id="recent_scores">Recent Scores</button>
+        </div>
 
         <script src="index.js"></script>
     </body>

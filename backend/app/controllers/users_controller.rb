@@ -10,16 +10,17 @@ class UsersController < ApplicationController
     end
 
     def create 
-        user = User.new(user_params)
-        if @user.save
-            render json: user
-        end
+        user = User.find_or_create_by(user_params)
+        game = Game.new(score: params[:score])
+        game.user = user
+        game.save 
+        render json: user
     end
 
     private
 
     def user_params
-        params.require(:user).permit(:name)
+        params.require(:user).permit(:name, :score)
     end
 
 end
