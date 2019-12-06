@@ -1,5 +1,34 @@
+button {
+  cursor: pointer;
+  border-radius: 25px;
+}
+
 .header {
+    text-align: center;
     color: blue;
+}
+
+#img-block {
+    padding: 0px 00px 20px 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+#img1{
+  height: 45%;
+  width: 45%;
+
+}
+#img2{
+  height: 45%;
+  width: 45%;
+
+}
+
+#options {
+    text-align: center;
 }
 
 #modal {
@@ -24,3 +53,10 @@
     width: 80%;
     text-align: center;
   }
+
+#lyrics { 
+  font-style: italic;
+  animation: fadeIn;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
