@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
     def index
-        # byebug
         @games = Game.all
         options = {
             include: [:user]

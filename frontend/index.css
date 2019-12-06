@@ -1,5 +1,15 @@
+button {
+  cursor: pointer;
+  border-radius: 25px;
+}
+
 .header {
+    text-align: center;
     color: blue;
+}
+
+#options {
+    text-align: center;
 }
 
 #modal {
@@ -24,3 +34,7 @@
     width: 80%;
     text-align: center;
   }
+
+#the_lyrics { 
+  font-style: italic;
+}
